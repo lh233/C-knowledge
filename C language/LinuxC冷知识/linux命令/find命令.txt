@@ -1,0 +1,26 @@
+通过文件名查找文件：
+find / -name .vimrc
+
+
+
+根据部分文件名查找方法：
+find /etc -name '*srm*'
+这个命令表明了Linux系统将在/etc整个目录中查找所有的包含有srm这3个字母的文件，比如 absrmyz， tibc.srm等等符合条件的文件都
+能显示出来。如果你还知道这个文件是由srm 这3个字母打头的，那么我们还可以省略最前面的星号，命令如下：
+
+find/etc -name 'srm*' 
+
+这是只有像srmyz 这样的文件才被查找出来，象absrmyz或者 absrm这样的文件都不符合要求，不被显示，这样查找文件的效率和可靠性就大大增强
+了。
+
+
+
+根据文件的特征查询方法：
+find / -amin -10 # 查找在系统中最后10分钟访问的文件
+find / -atime -2 # 查找在系统中最后48小时访问的文件
+find / -empty # 查找在系统中为空的文件或者文件夹
+find / -group cat # 查找在系统中属于 groupcat的文件
+find / -mmin -5 # 查找在系统中最后5分钟里修改过的文件
+find / -mtime -1 #查找在系统中最后24小时里修改过的文件
+find / -nouser #查找在系统中属于作废用户的文件
+find / -user fred #查找在系统中属于FRED这个用户的文件

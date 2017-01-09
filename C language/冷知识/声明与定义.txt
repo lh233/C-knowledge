@@ -1,0 +1,2 @@
+定义分配内存，声明没有分配内存；
+这就是extern char c[]和extern char c[100]

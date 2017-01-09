@@ -1,0 +1,14 @@
+文件的内容：
+1、bin文件是raw binary文件，这种文件中包含机器码；
+2、ELF文件除了机器码外，还包含其他额外信息，如段的加载地址，运行地址，重定位表，符号表等；
+
+
+文件的执行：
+1. 执行raw binary很简单，只需要将程序加载到其起始地址，就可以执行；
+    FILE *fp = fopen("vmlinux.bin", "rb");
+    fread(VMLINUX_START, 1, VMLINUX_SIZE, fp);
+    ((void (*)(void))VMLINUX_START)();
+2. 执行ELF程序则需要一个ELF Loader。
+
+现在知道了吧，uboot和Linux kernel启动的时候是没有ELF Loader的
+所以烧在flash上的文件只能是raw binary格式的，即镜像文件image

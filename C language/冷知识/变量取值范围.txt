@@ -1,0 +1,12 @@
+	整型数的取值范围
+类型		取值范围		长度（字节）
+(signed)short int	-2^15~2^15+1	2
+unsigned short int	0~2^16-1		4
+[signed] int	-2^31~2^31-1	4
+unsigned int	0~2^32-1		4
+signed long int	-2^31~2^31-1	4
+unsigned long int	0~2^32-1		4
+	实型数的取值范围
+类型		取值范围		长度（字节）	有效数字（位）
+float		10^-37~10^38	4		6~7
+double		10^-307~10^308	8		5~17 

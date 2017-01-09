@@ -1,0 +1,6 @@
+char * (* fun1)(char *p1, char *p2)
+fun1表示指向一个返回值为char *,参数分别是char *,char *的类型变量的函数
+可以改写为char * (*)(char *p1, char *p2) fun1;
+
+char * fun3(char *p1, char *p2)
+仅仅是返回值为char *类型的函数而已；

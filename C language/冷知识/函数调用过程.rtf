@@ -1,0 +1,44 @@
+{\rtf1\ansi\deff0\deftab480
+
+{\fonttbl
+{\f000 Courier New;}
+{\f001 Courier New;}
+{\f002 Courier New;}
+}
+
+{\colortbl
+\red000\green000\blue000;
+\red255\green255\blue255;
+\red000\green000\blue000;
+\red255\green255\blue255;
+\red000\green000\blue000;
+\red255\green255\blue255;
+}
+
+\f6619244\fs20\cb3\cf2 \highlight5\cf4\ul http://blog.chinaunix.net/uid-23069658-id-3981406.html\highlight1\cf0\ul0 \par
+\par
+深入理解C语言的函数调用过程：\par
+/*test.c*/\par
+#include <stdio.h>\par
+\par
+\par
+int foo1(int m,int n,int p)\par
+\{\par
+        int x = m + n + p;\par
+        return x;\par
+\}\par
+\par
+int main(int argc,char** argv)\par
+\{\par
+        int x,y,z,result;\par
+        x=11;\par
+        y=22;\par
+        z=33;\par
+        result = foo1(x,y,z);\par
+        printf("result=%d\\n",result);\par
+        return 0;\par
+\}\par
+\par
+/*\par
+主函数main定义了四个局部变量，\par
+*/}

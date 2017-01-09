@@ -1,0 +1,22 @@
+用法示例：
+ $ basename /usr/bin/sort       		输出"sort"。
+ $ basename ./include/stdio.h .h  		输出"stdio"
+ 
+ 为basename指定一个路径，basename命令会删除所有的前缀包括最后一个slash（‘/’）字符，然后将字符串显示出来。
+ 
+ 
+basename命令格式：
+basename [pathname] [suffix]
+basename [string] [suffix]
+?
+suffix为后缀，如果suffix被指定了，basename会将pathname或string中的suffix去掉。
+示例：
+
+$ basename /tmp/test/file.txt
+file.txt
+$ basename /tmp/test/file.txt .txt
+file
+
+注意点：
+1、如果像下面脚本中传递参数给basename，参数为空，basename会将参数左移
+2、basename最多接受两个参数，如果设置的参数多于两个，会提示错误。

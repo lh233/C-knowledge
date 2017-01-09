@@ -1,0 +1,12 @@
+typedef struct st_type
+{
+	int i;
+	int a[];
+}type_a;
+
+type_a *p = (type_a *)malloc(sizeof(type_a)+100*int);
+
+但是这时候我们就可以定义一个可变长的结构体，用sizeof(*p)测试结构体大小可以发现仍然是4；
+
+这是不是很奇怪？回忆一下我们讲过的“模子”， 在定义这个结构体时，柔性数组只是编外成员；
+

@@ -1,0 +1,20 @@
+枚举如果都没有赋值的话，它们的值从0开始依次递增1
+enum Color
+{
+     GREEN = 1,
+     RED,
+     BLUE,
+     GREEN_RED = 10,
+     GREEN_BLUE
+}ColorVal;
+enum变量类型可以给其中的常量符号赋值，则
+GREEN = 1
+RED = 2
+BLUE = 3
+GREEN_RED = 10
+GREEN_BLUE
+
+枚举与#define宏的区别：
+#define 宏常量是在预编译阶段进行简单的替换；枚举常量是在编译的时候确定其值的；
+一般在调试器里，可以调试枚举常量，但是不能调试宏常量
+枚举可以一次定义大量的相关的常量，而#define宏一次只能定义一次

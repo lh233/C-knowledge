@@ -1,0 +1,5 @@
+string函数不存在c语言中；
+在C++、Java中String可以这样定义为：
+string a = "abcdef";
+我们就可以这样定义为：
+char * a = "abcdef"

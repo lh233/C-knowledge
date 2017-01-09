@@ -1,0 +1,162 @@
+函数如何实现不定参数：
+
+由于在C语言中没有函数重载，解决不定数目函数参数问题变得比较麻烦，即使采用C++，如果参数个数不能确定，也很难采用函数重载。对这种情况
+，提出了指针参数来解决问题。
+
+
+（1）va_list 
+定义了一个指针arg_ptr, 用于指示可选的参数.
+
+（2）va_start(arg_ptr, argN)
+使参数列表指针arg_ptr指向函数参数列表中的第一个可选参数，argN是位于第一个可选参数之前的固定参数, 或者说最后一个固定参数.如有一va
+函数的声明是void va_test(char a, char b, char c, ...), 则它的固定参数依次是a,b,c, 最后一个固定参数argN为c, 因此就是va_start
+(arg_ptr, c).
+
+（3）va_arg(arg_ptr, type)
+返回参数列表中指针arg_ptr所指的参数, 返回类型为type. 并使指针arg_ptr指向参数列表中下一个参数.返回的是可选参数, 不包括固定参数.
+
+（4）va_end(arg_ptr)
+清空参数列表, 并置参数指针arg_ptr无效.
+（注：va在这里是variable-argument(可变参数)的意思.   这些宏定义在stdarg.h中,所以用到可变参数的程序应该包含这个头文件）
+
+
+
+
+例1：
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+int print(const char *format, ...)
+{
+    va_list args;
+    const char *args1;
+    va_start(args, format);
+    args1 = va_arg(args,const char *);
+    va_end(args);
+    printf("format=%s args1=%s", format, args1);
+}
+int main()
+{
+    print("11111", "22222");
+}
+
+
+/*
+运行结果:
+format=11111 args1=22222
+Process returned 24 (0x18)   execution time : 0.542 s
+Press any key to continue.
+*/
+
+
+
+例2：
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+int print(const char *format, ...)
+{
+    va_list args;
+    const char *args1;
+    va_start(args, format);
+    args1 = va_arg(args,const char *);
+    va_end(args);
+    printf("format=%s args1=%s", format, args1);
+}
+
+int main()
+{
+    print("11111", "22222", "333333");
+}
+
+
+/*
+运行结果:
+format=11111 args1=22222
+Process returned 24 (0x18)   execution time : 0.542 s
+Press any key to continue.
+*/
+
+我们从上面可以看见这样在函数中加入三个函数是没有问题的；
+
+
+
+
+例3：
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+int print(const char *format, ...)
+{
+    va_list args;
+    const char *args1;
+    va_start(args, format);
+    args1 = va_arg(args, const char *);
+    args2 = va_arg(args, const char *);
+    va_end(args);
+    printf("format=%s args1=%s", format, args1, args2);
+}
+
+
+int main()
+{
+
+    print("11111", "23333");
+}
+
+
+/*
+运行结果：
+format=11111 args1=23333
+Process returned 24 (0x18)   execution time : 0.153 s
+Press any key to continue.
+
+*/
+
+
+注意是上面并没有三个参数，但是程序还是可以运行起来的！
+
+
+从上面三个例子可以看出我们传入的参数都是一个类型的参数；
+
+
+
+不同类型的函数参数：
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+int print(const char *format, ...)
+{
+    va_list args;
+    int args1;
+    va_start(args, format);
+    args1 = va_arg(args, int);
+    va_end(args);
+    printf("format=%s args1=%d", format, args1);
+}
+
+
+int main()
+{
+
+    print("11111", 123);
+}
+/*
+运行结果：
+format=11111 args1=123
+Process returned 22 (0x16)   execution time : 0.007 s
+Press any key to continue.
+*/
+
+
+
+但是注意不能使用：
+总之，va_arg(ap,type)中的type绝对不能为以下类型：
+——char、signed char、unsigned char
+——short、unsigned short
+——signed short、short int、signed short int、unsigned short int
+——float

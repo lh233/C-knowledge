@@ -1,0 +1,10 @@
+argc是命令行总的参数个数 
+argv[]是argc个参数，其中第0个参数是程序的全名，以后的参数命令行后面跟的用户输入的参数，比如：  
+   int   main(int   argc,   char*   argv[])  
+   {  
+		   int   i;  
+		   for   (i=0;   i<argc;   i++)  
+		   cout<<argv[i]<<endl;  
+		   cin>>i;  
+		   return   0;  
+   }  

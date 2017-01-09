@@ -1,0 +1,121 @@
+预处理
+#error
+示例：
+#include <stdio.h>
+#define SIZE 100
+int main()
+{
+//    int SIZE = 100;
+    #if SIZE<1 || SIZE<100		
+    #error ("SIZE must be between 1 and 200")
+    #endif
+    return 0;
+}
+
+
+#line处理
+#include "stdio.h"
+void Test();
+#line 10 "Hello.c"
+int main(int argc, char* argv[])
+{
+	#define CONST_NAME1 "CONST_NAME1"
+	printf("%s/n",CONST_NAME1);
+	#undef CONST_NAME1
+	printf("%s/n",CONST_NAME1);
+{
+	#define CONST_NAME2 "CONST_NAME2"
+	printf("%s/n",CONST_NAME2);
+}
+	printf("%s/n",CONST_NAME2);
+	return 0;
+}
+void Test()
+{
+	printf("%s/n",CONST_NAME2);
+}
+提示如下的编译信息：
+Hello.c(15) : error C2065: 'CONST_NAME1' : undeclared identifier
+表示当前文件的名称被认为是Hello.c， #line 10 "Hello.c"所在的下一行被认为是第10行，因此提示第15行出错。
+
+
+#pragma预处理
+
+#pragma once
+
+一般用于头文件开始，预编译时，只插入一次此头文件。
+例如 头文件 "grandfather.h"
+#pragma once
+#ifndef GRANDFATHER_H
+#define GRANDFATHER_H
+struct foo
+{
+    int member;
+}; 
+#endif /* GRANDFATHER_H */
+当这段程序多次被include ( 多文件编译，相互include时会遇到），只插入和编译一次。
+#pragma once 的编译速度 比 #ifndef GRANDFATHER_H #define GRANDFATHER_H ..快，
+所以往往 全用。
+
+与#ifndef #define的区别可见：http://www.cppblog.com/cxiaojia/archive/2013/03/18/198526.html
+
+
+#pragma comment
+#pragma comment(...)
+该指令将一个注释记录放入一个对象文件或可执行文件中。
+常用于链接一个动态库，如
+#pragma comment(lib, "user32.lib");
+也有linker：将一个链接选项放入目标文件中，你可以使用这个指令来代替由命令行传入的或者在开发环境中设置的链接选项来强制包含某个对象，例如：
+#pragma comment(linker, "/include:_mySymbol")
+
+
+#pragma code_seg
+void func1() {                  // 默认存储在代码段.text中
+}
+
+#pragma code_seg(".my_data1")
+
+void func2() {                  // 存储在代码段.my_data1中
+}
+
+#pragma code_seg(push, r1, ".my_data2")
+
+void func3() {                  // 存储在代码段.my_data2中
+}
+
+#pragma code_seg(pop, r1)
+
+void func4() {                  // 存储在代码段.my_data1中
+}
+它能够设置程序中函数代码存放的代码段，当我们开发驱动程序的时候就会使用到它。
+
+
+#pragma hdrstop
+
+#pragma hdrstop 表示预编译头文件到此为止，后面的头文件不进行预编译。 BCB 可以预编译头文件以加快链接的速度，但如果所有头文件都进行预编译又可能占太多磁盘空间，所以使用这个选项排除一些头文件。
+
+ 
+
+#pragma warning
+
+#pragma warning( disable : 4507 34; once : 4385; error : 164 )
+等价于：
+#pragma warning(disable:4507 34) // 不显示 4507 和 34 号警告信息
+#pragma warning(once:4385) // 4385 号警告信息仅报告一次
+#pragma warning(error:164) // 把 164 号警告信息作为一个错误。
+同时这个 pragma warning 也支持如下格式：
+#pragma warning( push [ ,n ] )
+#pragma warning( pop )
+这里 n 代表一个警告等级(1---4)。
+#pragma warning( push )保存所有警告信息的现有的警告状态。
+#pragma warning( push, n)保存所有警告信息的现有的警告状态，并且把全局警告
+等级设定为 n。
+#pragma warning( pop )向栈中弹出最后一个警告信息，在入栈和出栈之间所作的
+一切改动取消。例如：
+#pragma warning( push )
+#pragma warning( disable : 4705 )
+#pragma warning( disable : 4706 )
+#pragma warning( disable : 4707 )
+//.......
+#pragma warning( pop )
+在这段代码的最后，重新保存所有的警告信息(包括 4705， 4706 和 4707)。

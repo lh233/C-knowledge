@@ -1,0 +1,7 @@
+1、signed 和 unsigned 
+2、void指针
+3、volatile中的使用
+4、空结构体有多大？
+5、柔性数组
+6、贪心法
+7、预处理

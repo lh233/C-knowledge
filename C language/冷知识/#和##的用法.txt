@@ -1,0 +1,45 @@
+	在类函数宏（function-like macro）的替换部分中，“#”符号用作一个预处理运算符，它可以把语言符号（token）转化为字符串。
+例如，如果 x 是一个宏参量，那么 #x 可以把参数名转化为相应的字符串。该过程称为字符串化。
+	说明：类函数宏就是带参数的宏。类函数宏的定义中，用圆括号括起来一个或多个参数，随后这些参数出现在替换部分。
+
+#include <stdio.h> 
+#define PSQR(x) printf("The square of " #x " is %d. /r/n", (x) * (x)) 
+ 
+int main(void)
+{
+    int y = 5; 
+    
+    PSQR(y);
+    PSQR(2 + 4); 
+ 
+    return 0; 
+}
+ 
+// 输出：
+The square of y is 25.     // 用 "y" 代替 #x 
+The square of 2 + 4 is 36. // 用 "2 + 4" 代替 #x
+
+
+2. 预处理器的粘合剂：## 运算符
+
+和 # 运算符一样，## 运算符可以用于类函数宏的替换部分。另外，## 运算符还可用于类对象宏（object-like macro）的替换部分。
+这个运算符把两个语言符号组合成单个语言符号。例如，可以定义如下宏：
+
+
+#include <stdio.h>   
+#define XNAME(n) x ## n   
+#define PRINT_XN(n) printf("x" #n " = %d/r/n", x ## n);   
+   
+int main(void)  
+{  
+    int XNAME(1) = 14; // 变为 int x1 = 14;   
+    int XNAME(2) = 20; // 变为 int x2 = 20;   
+    PRINT_XN(1)        // 变为 printf("x1 = %d/r/n", x1);   
+    PRINT_XN(2)        // 变为 printf("x2 = %d/r/n", x2);   
+   
+    return 0;   
+}  
+   
+// 输出：  
+x1 = 14   
+x2 = 20

@@ -1,0 +1,92 @@
+1、执行效率
+2、能够更直接控制处理器
+
+汇编调用c函数
+ldr pc, =函数名
+
+c调用汇编函数(增加.global)
+.global light_led
+light_led:
+ 	ldr     R0,=0xE0200060                           
+	ldr     R1,=0x00011000
+	str     R1,[R0]             
+	ldr     R0,=0xE0200064      
+	ldr     R1,=0x00000018     
+	str     R1,[R0]
+	mov pc, lr
+	
+http://www.cnblogs.com/defen/p/4755809.html	
+	
+c内嵌汇编（没有专门的.S文件）
+__asm__(
+	汇编语句部分
+	:输出部分（写参数）
+	:输入部分（读参数）
+	:破坏描述部分
+)
+c内嵌汇编以关键字"__asm__"或"asm"开始，下面四个部分，各部分之间使用“:”分开，第一部分是必须写的，后面三部分是可以忽略，但是分号:
+不能省略；
+这里的output（ASM->C）和input(C->ASM)
+
+
+
+例1
+void write_p15_c1(unsigned long value)
+{
+	__asm__(
+		"mcr p15,0, %0, c1, c0, 0\n" 		//%0表示0号参数
+		:
+		:"r"(value)	@编译器选择一个R*寄存器,输入部分
+	);
+}
+
+
+
+例2：
+unsigned long read_p15_c1(void)
+{
+	unsigned long value;
+	__asm__(
+		"mrc p15, 0, %0, c1, c0, 0\n"
+		: “=r”(value) @“=”表示只写操作数，用于输出部分
+		:
+		: "memory"	@破坏部分，memory表示破坏内存
+	);
+	return value;
+
+}
+
+
+
+例3：
+unsigned long old;
+unsigned long temp;
+__asm__ volatile(
+	"mrs %0,cpsr \n"
+	"orr %1, %0, #128 \n"
+	"msr cpsr_c, %1\n"
+	:"=r"(old), "=r"(temp)
+	:
+	:"memory"
+)
+
+
+例4：
+#define GPKCON 0x7f008800
+#define GPKDAT 0x7f008808
+int gboot_main()
+{
+	__asm__ __volatile__(
+			"ldr r1,=0x00011000\n"
+			"str r1,[%0]\n"  
+			"ldr r1, =0xa0\n"
+			"str r1,[%1]\n"
+			:
+			:"r"(GPKCON), "r"(GPKDAT)
+			:"r1"			@会对r1破坏
+	)
+    return 0;    
+}
+
+
+__volatile__告诉编译器不要优化内嵌汇编，如果想优化可以不加；

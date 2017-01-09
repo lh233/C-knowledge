@@ -1,0 +1,6 @@
+没有返回值的return函数
+void main
+{
+	return;			//这样是正确的，如果没有的话，就会隐式执行return
+}
+如果

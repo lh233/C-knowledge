@@ -1,0 +1,2 @@
+perror和strerror都是C语言提供的库函数，用于获取与erno相关的错误信息，区别不大，用法也简单。
+最大的区别在于perror向stderr输出结果，而 strerror向stdout输出结果。

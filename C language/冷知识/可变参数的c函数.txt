@@ -1,0 +1,92 @@
+我们在C语言编程中会遇到一些参数个数可变的函数,例如printf()这个函数,它的定义是这样的:
+　    　int printf( const char* format, ...);
+
+
+写一个简单的可变参数的C函数 
+下面我们来探讨如何写一个简单的可变参数的C函数.写可变参数的C函数要在程序中用到以下这些宏:
+　　void va_start( va_list arg_ptr, prev_param ); 
+　　type va_arg( va_list arg_ptr, type ); 
+　　void va_end( va_list arg_ptr );
+
+
+
+这些宏定义在stdarg.h中：
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+
+void simple_va_fun(int start, ...)
+{
+    //首先在函数里定义一个va_list型的变量,这里是arg_ptr,这个变量是指向参数的指针.
+    va_list arg_ptr;
+    int nArgValue=start;
+    int nArgCount=0;
+
+    //然后用va_start宏初始化变量arg_ptr,这个宏的第二个参数是第 一个可变参数的前一个参数,是一个固定的参数.
+   va_start(arg_ptr, start);				//va_start中的arg_ptr就是第一个参数
+
+    //然后用va_arg返回可变的参数,并赋值给整数j. va_arg的第二个参数是你要返回的参数的类型,这里是int型.
+    do
+    {
+        ++nArgCount;
+        printf("the %d th arg: %d\n",nArgCount,nArgValue); //输出各参数的值
+        nArgValue = va_arg(arg_ptr,int);  //得到下一个可变参数的值，第二个参数了，如果再调用一次之后就会出现第三个参数
+    }while(nArgValue!=-1);
+	
+    /*
+    然后用va_end宏结束可变参数的获取.然后你就可以在函数里使用第二个参数了.如果函数有多个可变参数的,依次调用va_arg获取
+    各个参数.
+    */
+    va_end(arg_ptr);
+    printf("\n");
+    return;
+}
+int main()
+{
+    simple_va_fun(100, -1);
+    simple_va_fun(101, 200, -1);
+    simple_va_fun(101, 200, 300, -1);
+    return 0;
+}
+/*
+运行结果：
+the 1 th arg: 100
+
+the 1 th arg: 101
+the 2 th arg: 200
+
+the 1 th arg: 101
+the 2 th arg: 200
+the 3 th arg: 300
+
+
+Process returned 0 (0x0)   execution time : 0.023 s
+Press any key to continue.
+
+
+*/
+
+
+
+
+_vsnprintf函数
+#include <stdio.h>
+#include <stdarg.h>
+int mon_log(char* format, ...)
+{
+char str_tmp[50];
+int i=0;
+va_list vArgList;                            //定义一个va_list型的变量,这个变量是指向参数的指针.
+va_start (vArgList, format);                 //用va_start宏初始化变量,这个宏的第二个参数是第一个可变参数的前一个参数,是一个固定的参数
+i=_vsnprintf(str_tmp, 50, format, vArgList); //注意,不要漏掉前面的_
+va_end(vArgList);                            //用va_end宏结束可变参数的获取
+return i;                                    //返回参数的字符个数中间有逗号间隔
+}
+//调用上面的函数
+void main()　
+{
+    int i=mon_log("%s,%d,%d,%d","asd",2,3,4);
+    printf("%d\n",i);
+}

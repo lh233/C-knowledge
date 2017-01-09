@@ -1,0 +1,20 @@
+main()
+{
+	int a[5] = {1, 2, 3, 4, 5};
+	int *ptr = (int *)(&a + 1);
+	int *ptr = (int *)(&a[0] + 1);
+	printf("%d %d %d", *(a+1), *(ptr-1), *(ptr1-1));
+	
+}
+
+/*
+运行结果：
+2 5 1
+Press any key to continue
+*/
+&a是整个数组的首地址，因此&a+1可以这样表示&a+5*sizeof(int);
+a代表数组a[0]的首地址
+
+还有一个&a[0]是和a一样的
+
+

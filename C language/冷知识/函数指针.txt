@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+typedef int (*pfun)(int j, int i);
+int fun(int, int);
+
+int main( void )
+{
+    pfun pf;
+    fun(20, 30);
+    pf = &fun;
+    (*pf)(40, 50);
+}
+
+
+int fun(int j, int i)
+{
+    printf("j+i=%d\n", j+i);
+    return  j+i;
+}
+
+使用函数指针：
+pfun = fun;
+pfun = fun;			//这两句是等价的
+此外，我们还能直接使用指向函数的指针调用该函数，无须提前解引用指针：
+bool b1 = pfun("helllo", "goodbye");
+bool b2 = (*pfun)("helllo", "goodbye");
+bool b3 = fun("helllo", "goodbye");
+
+
+直接使用函数指针类型显得冗长而繁琐。使用typedef和decltype可以简化函数指针的代码：
+//函数类型
+typedef bool Func(const string &, const string &);
+typedef bool decltype(lengthCompare) Func2;
+
+//等价的
+typedef bool (*Func)(const string &, const string &);
+typedef bool decltype(lengthCompare) *Func2;
+

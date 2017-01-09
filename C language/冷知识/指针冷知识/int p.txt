@@ -1,0 +1,3 @@
+int *p= NULL和*p = NULL
+
+其实NULL就是0的意思。。。。

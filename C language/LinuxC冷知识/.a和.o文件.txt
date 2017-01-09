@@ -1,0 +1,4 @@
+.a文件和.o文件的区别：
+答：
+.a文件 = static library 	（静态类库，已经编译好的库）
+.o文件 = object file		(编译创建用来link的文件)

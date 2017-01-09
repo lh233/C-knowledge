@@ -1,0 +1,17 @@
+void 指针
+
+
+void *pvoid;		
+pvoid++;	//这样是错误的；
+pvoid+=1;	//这样是错误的；
+按照ANSI标准， 不能对void指针进行算法操作；
+
+而按照GNU标准， 则不这么认定的；
+pvoid++; 	//GNU：正确
+pvoid += 1; //GNU：正确
+
+在实际的程序设计中，为符合 ANSI 标准，并提高程序的可移植性，我们可以这样编写
+实现同样功能的代码：
+void * pvoid;
+(char *)pvoid++; //ANSI：正确； GNU：正确
+(char *)pvoid += 1; //ANSI：错误； GNU：正确
