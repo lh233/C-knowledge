@@ -1,0 +1,36 @@
+__func__
+当前所在函数名
+#include <stdio.h>
+#include <stdlib.h>
+
+void why_me();
+
+int main()
+{
+    printf( "The file is %s.\n", __FILE__ );
+    printf( "The date is %s.\n", __DATE__ );
+    printf( "The time is %s.\n", __TIME__ );
+    printf( "This is line %d.\n", __LINE__ );
+    printf( "This function is %s.\n", __func__ );
+
+    why_me();
+
+     return 0;
+}
+
+void why_me()
+{
+    printf( "This function is %s\n", __func__ );
+    printf( "The file is %s.\n", __FILE__ );
+    printf( "This is line %d.\n", __LINE__ );
+}
+
+打印信息：
+The file is debug.c.
+The date is Jun  6 2012.
+The time is 09:36:28.
+This is line 15.
+This function is main.
+This function is why_me
+The file is debug.c.
+This is line 27.
