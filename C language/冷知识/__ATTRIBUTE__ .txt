@@ -1,0 +1,57 @@
+http://www.cnblogs.com/astwish/p/3460618.html
+GNU C 的一大特色就是__attribute__ 机制。__attribute__ 可以设置函数属性（Function Attribute ）、变量属性（Variable Attribute ）
+和类型属性（Type Attribute ）。
+
+__attribute__ 书写特征是：__attribute__ 前后都有两个下划线，并切后面会紧跟一对原括弧，括弧里面是相应的__attribute__ 参数。
+
+__attribute__ 语法格式为：__attribute__ ((attribute-list))
+
+其位置约束为：放于声明的尾部“ ；” 之前。
+
+
+关键字__attribute__ 也可以对结构体（struct ）或共用体（union ）进行属性设置。大致有六个参数值可以被设定，即：aligned, packed, transparent_union, unused, deprecated 和 may_alias 。
+
+1、aligned (alignment)
+
+该属性设定一个指定大小的对齐格式（以字节 为单位），例如：
+
+struct S {
+short b[3];
+} __attribute__ ((aligned (8)));
+
+typedef int int32_t __attribute__ ((aligned (8)));
+该声明将强制编译器确保（尽它所能）变量类 型为struct S 或者int32_t 的变量在分配空间时采用8 字节对齐方式。
+
+如上所述，你可以手动指定对齐的格式，同 样，你也可以使用默认的对齐方式。如果aligned 后面不紧跟一个指定的数字值，那么编译器将依据你的目标机器情况使用最大最有益的对齐方式。例如：
+struct S {
+short b[3];
+} __attribute__ ((aligned));
+
+这里，如果sizeof （short ）的大小为2 （byte ），那么，S 的大小就为6 。取一个2 的次方值，使得该值大于等于6 ，则该值为8 ，所以编译器将设置S 类型的对齐方式为8 字节。
+aligned 属性使被设置的对象占用更多的空间，相反的，使用packed 可以减小对象占用的空间。
+需要注意的是，attribute 属性的效力与你的连接器也有关，如果你的连接器最大只支持16 字节对齐，那么你此时定义32 字节对齐也是无济于事的。
+
+
+
+
+2、packed：
+  使用该属性对struct 或者union 类型进行定义，设定其类型的每一个变量的内存约束。当用在enum 类型 定义时，暗示了应该使用最小完整的类型（it indicates that the smallest integral type should be used）。
+
+  下面的例子中，packed_struct 类型的变量数组中的值将会紧紧的靠在一起，但内部的成员变量s 不会被“pack” ，如果希望内部的成员变量也被packed 的话，unpacked-struct 也需要使用packed 进行相应的约束。
+
+struct unpacked_struct
+{
+      char c;
+      int i;
+
+};
+
+struct packed_struct
+{
+     char c;
+     int  i;
+     struct unpacked_struct s;
+}__attribute__ ((__packed__));
+
+下面的例子中使用__attribute__ 属性定义了一些结构体及其变量，并给出了输出结果和对结果的分析。
+
