@@ -10,4 +10,20 @@
 内存地址0x40001		0x34
 大端模式
 
+
+int CheckCPU()
+{
+	union w
+	{
+		int a;
+		char b;
+	}c;
+	c.a = 1;
+	return (c.b == 1);
+}
+
+
+假如c.b = 1的话，就是小端模式；否则则是大端模式；
+
+
 http://blog.csdn.net/dyllove98/article/details/8923298

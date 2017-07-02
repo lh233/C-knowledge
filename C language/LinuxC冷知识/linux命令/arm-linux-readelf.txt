@@ -1,0 +1,1 @@
+arm-linux-readelf + -d命令后可以出现依赖的动态库文件

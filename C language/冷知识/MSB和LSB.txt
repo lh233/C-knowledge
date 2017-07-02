@@ -1,0 +1,4 @@
+MSB是Most Significant Bit的缩写，最高有效位。在二进制数中，MSB是最高加权位。与十进制数字中最左边的一位类似。
+通常，MSB位于二进制数的最左侧，LSB位于二进制数的最右侧。   
+LSB（Least Significant Bit），意为最低有效位；MSB（Most Significant Bit），意为最高有效位，若MSB=1，则表示
+数据为负值，若MSB=0，则表示数据为正。

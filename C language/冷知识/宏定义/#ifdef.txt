@@ -1,0 +1,31 @@
+使用#ifdef指示符，我们可以区隔一些与特定头文件、程序库和其他文件版本有关的代码。
+
+#ifdef XXX
+此处是希望发生变化的条件，如包含一个头文件
+#endif 
+
+#include "iostream.h"
+int main()
+{
+	#ifdef DEBUG 
+	cout<< "Beginning execution of main()";
+	#endif 
+	return 0;
+}
+
+运行结果为：Press any key to continue
+
+
+
+#include "iostream.h"
+#define DEBUG 
+int main()
+{
+	#ifdef DEBUG 
+	cout<< "Beginning execution of main()";
+	#endif 
+	return 0;
+} 
+
+运行结果为：Beginning execution of main()
+Press any key to continue

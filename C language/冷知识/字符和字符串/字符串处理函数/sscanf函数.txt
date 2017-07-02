@@ -1,0 +1,8 @@
+char buf[512] = ;
+sscanf("123456 ", "%s", buf);
+printf("%s\n", buf);
+
+
+
+½á¹ûÎª1234
+

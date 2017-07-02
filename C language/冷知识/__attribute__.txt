@@ -1,1 +1,7 @@
 __attribute__
+GNU C 的一大特色就是__attribute__ 机制。__attribute__ 可以设置函数属性（Function Attribute ）、变量属性（Variable Attribute ）
+和类型属性（Type Attribute ）。
+
+__attribute__ 书写特征是：__attribute__ 前后都有两个下划线，并切后面会紧跟一对原括弧，括弧里面是相应的__attribute__ 参数。
+
+http://www.cnblogs.com/astwish/p/3460618.html

@@ -1,0 +1,6 @@
+ uname -s 显示内核名字
+ uname -r 显示内核版本
+ uname -n 显示网络主机名
+ uname -p 显示cpu
+ uname -m 显示操作系统
+ uname -a 显示所有信息

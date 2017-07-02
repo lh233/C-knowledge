@@ -4,5 +4,12 @@ tar
 -f  使用归档文件
 -v  显示详细信息
 -t  查看包内文件
--j  使用baip2程序
--z  使用gzip程序
+-j  使用baip2程序（.tar.bz2）
+-z  使用gzip程序(.tar.gz格式)
+-N 比后面接的日期（yyyy/mm/dd）
+
+
+tar -czvf 1.tar.gz 1.c 压缩成.tar.gz 
+
+
+注意：.tar.xz后缀可以使用-vf 格式压缩或解压
