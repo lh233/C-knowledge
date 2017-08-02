@@ -1,0 +1,10 @@
+C语言中UL的意思
+
+C语言中有一些宏定义使用到”UL“这个东西是说明是unsigned long 
+整常数缺省类型应该是integer。如果本意就是integer类型的话，自然不用加ul。
+example
+
+
+#define SECOND 10UL 
+
+如果不加UL的话说明缺省值是int 假如不是用int 的话就要更改成为自己的类型，故在后面加上UL代表的就是unsigned long的类型。
