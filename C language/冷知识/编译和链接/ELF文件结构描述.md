@@ -27,7 +27,7 @@ typedef struct {
     Elf32_Half e_shstrndx;
 }Elf32_Ehdr;
 ```
-![Markdown](http://i2.bvimg.com/641036/57ef88e31035f55c.png)  
+![Markdown](http://i1.bvimg.com/641036/c612f100c3c71446.png)  
 ![Markdown](http://i2.bvimg.com/641036/90f9474f053aae0c.png)  
 
 ## 段表
