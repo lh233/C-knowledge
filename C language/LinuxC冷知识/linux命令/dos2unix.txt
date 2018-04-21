@@ -1,0 +1,1 @@
+在windows操作系统中，dos换行符是CR与LF两个符号，则仅有LF($)，可以使用dos2unix命令
