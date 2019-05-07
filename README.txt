@@ -96,5 +96,6 @@
 │       ├── 编译和链接
 │       ├── 贪心法.txt
 │       ├── 赋值.txt
-│       └── 静态函数的作用.txt
+│       ├── 静态函数的作用.txt
+│  		└── srand(time(NULL));.txt
 └── README.txt
