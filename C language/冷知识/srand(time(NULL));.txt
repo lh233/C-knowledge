@@ -1,0 +1,35 @@
+srand()的功能就是就是设置产生随机数的公式的参数（随机数种子），如果使用相同的种子，那么得到的随机数也就是相同的。自然，如果使用不同的种子，得出的随机数序列也是不同的。
+不同的种子会得到 固定 的 不同的随机数序列。
+
+例如：
+void main()
+{
+	srand(1);
+	cout<<rand()<<endl;
+	cout<<rand()<<endl;
+	srand(1);
+	cout<<rand()<<endl;
+	cout<<rand()<<endl;
+	srand(2);
+	cout<<rand()<<endl;
+	cout<<rand()<<endl;
+	srand(2);
+	cout<<rand()<<endl;
+	cout<<rand()<<endl;
+}
+输出结果：
+41
+18467
+41
+18467
+45
+29216
+45
+29216
+由于通过srand（1）和srand（2）设置了不同的随机数种子
+所以产生了两组不同的随机数，这组数与种子相对应。
+
+那么怎么利用rand产生真正的“随机数”呢？
+
+答案是通过srand（time（NULL））使得随机数种子随时间的变化而变化。
+PS：time函数可以获取当前的系统时间，返回的结果是一个time_t类型，其实就是一个大整数，其值表示从CUT（Coordinated Universal Time）时间1970年1月1日00:00:00（称为UNIX系统的Epoch时间）到当前时刻的秒数。
