@@ -203,5 +203,3 @@
 │           │   └── strstr函数.txt
 │           └── 字符和字符串.txt
 └── README.txt
-
-18 directories, 186 files
