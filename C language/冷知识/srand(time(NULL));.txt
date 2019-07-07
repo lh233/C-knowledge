@@ -33,3 +33,9 @@ void main()
 
 答案是通过srand（time（NULL））使得随机数种子随时间的变化而变化。
 PS：time函数可以获取当前的系统时间，返回的结果是一个time_t类型，其实就是一个大整数，其值表示从CUT（Coordinated Universal Time）时间1970年1月1日00:00:00（称为UNIX系统的Epoch时间）到当前时刻的秒数。
+
+
+需要增加的头文件是:
+
+#include <stdlib.h>
+#include <time.h>
