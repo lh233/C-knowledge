@@ -1,0 +1,16 @@
+size_t和int
+      size_t是一些C/C++标准在stddef.h中定义的。这个类型足以用来表示对象的大小。size_t的真实类型与操作系统有关。
+
+
+在32位架构中被普遍定义为：
+
+typedef   unsigned int size_t;
+
+而在64位架构中被定义为：
+
+typedef  unsigned long size_t;
+        size_t在32位架构上是4字节，在64位架构上是8字节，在不同架构上进行编译时需要注意这个问题。而int在不同架构下都是4字节，与size_t不同；且int为带符号数，size_t为无符号数。
+
+为什么有时候不用int，而是用size_type或者size_t:
+
+       与int固定四个字节不同有所不同,size_t的取值range是目标平台下最大可能的数组尺寸,一些平台下size_t的范围小于int的正数范围,又或者大于unsigned int. 使用Int既有可能浪费，又有可能范围不够大
