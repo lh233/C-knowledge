@@ -5,3 +5,85 @@ GNU C 的一大特色就是__attribute__ 机制。__attribute__ 可以设置函�
 __attribute__ 书写特征是：__attribute__ 前后都有两个下划线，并切后面会紧跟一对原括弧，括弧里面是相应的__attribute__ 参数。
 
 http://www.cnblogs.com/astwish/p/3460618.html
+
+__attribute__((packed))详解
+标签： it	分类： linux程序
+1. __attribute__ ((packed)) 的作用就是告诉编译器取消结构在编译过程中的优化对齐,按照实际占用字节数进行对齐，是GCC特有的语法。这个功能是跟操作系统没关系，跟编译器有关，gcc编译器不是紧凑模式的，我在windows下，用vc的编译器也不是紧凑的，用tc的编译器就是紧凑的。例如：
+
+在TC下：struct my{ char ch; int a;} sizeof(int)=2;sizeof(my)=3;（紧凑模式）
+
+在GCC下：struct my{ char ch; int a;} sizeof(int)=4;sizeof(my)=8;（非紧凑模式）
+
+在GCC下：struct my{ char ch; int a;}__attrubte__ ((packed)) sizeof(int)=4;sizeof(my)=5
+
+2. __attribute__关键字主要是用来在函数或数据声明中设置其属性。给函数赋给属性的主要目的在于让编译器进行优化。函数声明中的__attribute__((noreturn))，就是告诉编译器这个函数不会返回给调用者，以便编译器在优化时去掉不必要的函数返回代码。
+
+GNU C的一大特色就是__attribute__机制。__attribute__可以设置函数属性（Function Attribute）、变量属性（Variable Attribute）和类型属性（Type Attribute）。
+
+__attribute__书写特征是：__attribute__前后都有两个下划线，并且后面会紧跟一对括弧，括弧里面是相应的__attribute__参数。
+
+__attribute__语法格式为：
+
+__attribute__ ((attribute-list))
+
+其位置约束：放于声明的尾部“；”之前。
+
+函数属性（Function Attribute）：函数属性可以帮助开发者把一些特性添加到函数声明中，从而可以使编译器在错误检查方面的功能更强大。__attribute__机制也很容易同非GNU应用程序做到兼容之功效。
+
+GNU CC需要使用 –Wall编译器来击活该功能，这是控制警告信息的一个很好的方式。
+
+packed属性：使用该属性可以使得变量或者结构体成员使用最小的对齐方式，即对变量是一字节对齐，对域（field）是位对齐。
+
+如果你看过GPSR协议在TinyOS中的实现，你一定会注意到下面的语句：
+typedef struct {
+    double x;
+    double y;
+} __attribute__((packed)) position_t;
+
+开始我们还可以理解，不久是定义一个结构体嘛！不过看到后面的语句，你可能就会一头雾水了，’ __attribute__((packed))’是什么东西？有什么作用？一连串的疑问马上就会从你脑袋里冒出来。虽然这个对理解整个程序没有什么影响，但我不想让这些疑问一直呆在我的脑子里，负担太重。省得以后念念不忘，而且也许有一天可以用的上呢。搞清楚这个问题吧！
+
+GNU C的一大特色（却不被初学者所知）就是__attribute__机制。__attribute__可以设置函数属性（Function Attribute）、变量属性（Variable Attribute）和类型属性（Type Attribute）。
+__attribute__语法格式为：
+__attribute__ ((attribute-list))
+
+其位置约束为：放于声明的尾部“；”之前。
+
+packed是类型属性（Type Attribute）的一个参数，使用packed可以减小对象占用的空间。需要注意的是，attribute属性的效力与你的连接器也有关，如果你的连接器最大只支持16字节对齐，那么你此时定义32字节对齐也是无济于事的。
+
+使用该属性对struct或者union类型进行定义，设定其类型的每一个变量的内存约束。当用在enum类型定义时，暗示了应该使用最小完整的类型（it indicates that the smallest integral type should be used）。
+
+下面的例子中，my-packed-struct类型的变量数组中的值会紧凑在一起，但内部的成员变量s不会被“pack”，如果希望内部的成员变量也被packed的话，my-unpacked-struct也需要使用packed进行相应的约束。
+struct my_unpacked_struct
+{
+     char c;
+     int i;
+};
+         
+struct my_packed_struct
+{
+     char c;
+     int i;
+     struct my_unpacked_struct s;
+}__attribute__ ((__packed__));
+
+ 
+
+ 
+
+在每个系统上看下这个结构体的长度吧。
+    内存对齐，往往是由编译器来做的，如果你使用的是gcc，可以在定义变量时，添加__attribute__，来决定是否使用内存对齐，或是内存对齐到几个字节，以上面的结构体为例：
+ 1)到4字节，同样可指定对齐到8字节。
+struct student
+{
+    char name[7];
+    uint32_t id;
+    char subject[5];
+} __attribute__ ((aligned(4))); 
+
+2)不对齐，结构体的长度，就是各个变量长度的和
+struct student
+{
+    char name[7];
+    uint32_t id;
+    char subject[5];
+} __attribute__ ((packed));
