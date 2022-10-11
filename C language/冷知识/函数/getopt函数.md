@@ -127,3 +127,53 @@ int main(int argc, char *argv[]) {
 编译和运行：
 
 ![](./getopt2.png)
+
+冒号隔开：
+
+```
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+ 
+int main(int argc, char *argv[])
+{
+    int opt;
+    char *optstring = "a:b:c:d";
+ 
+    while ((opt = getopt(argc, argv, optstring)) != -1)
+    {
+        printf("opt = %c\n", opt);
+        printf("optarg = %s\n", optarg);
+        printf("optind = %d\n", optind);
+        printf("argv[optind - 1] = %s\n\n",  argv[optind - 1]);
+    }
+ 
+    return 0;
+}
+```
+
+编译上述程序并运行，有如下结果：
+
+```
+cashey@ubuntu:~/Desktop/getopt$ ./test_getopt -a 100 -b 200 -c admin -d
+opt = a
+optarg = 100
+optind = 3
+argv[optind - 1] = 100
+ 
+opt = b
+optarg = 200
+optind = 5
+argv[optind - 1] = 200
+ 
+opt = c
+optarg = admin
+optind = 7
+argv[optind - 1] = admin
+ 
+opt = d
+optarg = (null)
+optind = 8
+argv[optind - 1] = -d
+```
+
